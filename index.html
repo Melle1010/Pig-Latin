@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+      .container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+      h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+      }
+
+      label {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        font-size: 24px;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+      }
+
+      button {
+        background-color: #333;
+        color: #fff;
+        font-size: 24px;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+
+      button:hover {
+        background-color: #555;
+        transform: translateY(-2px);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      p {
+        font-size: 24px;
+        margin-top: 20px;
+      }
+      #credit {
+  text-align: center;
+  margin-top: 50px;
+  color: #555;
+
+  text-align: center;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pig Latin Converter</h1>
+        <label for="input">Enter text to convert:</label>
+        <input type="text" id="input">
+        <button id="convert-btn" onclick="convertToPigLatin()">Convert</button>
+        <p id="output"></p>
+        <p id="credit">Created by Melvin Danielsson</p>
+      </div>
+</body>
+<script>
+        function toPigLatin(input) {
+      // Split the input string into an array of words
+  const words = input.split(' ');
+
+  // Define an array of vowels to check against
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+
+  // Define a function to convert each word to Pig Latin
+  const convertWordToPigLatin = (word) => {
+    // Check if the word starts with a vowel
+    if (vowels.includes(word[0])) {
+      return word + 'ay'; // If it does, add "ay" to the end of the word
+    } else {
+      // If the word starts with a consonant or consonant cluster,
+      // find the index of the first vowel
+      const firstVowelIndex = word.split('').findIndex(char => vowels.includes(char));
+      // Split the word into two parts: the consonant or consonant cluster and the rest of the word
+      const consonants = word.slice(0, firstVowelIndex);
+      const restOfWord = word.slice(firstVowelIndex);
+      // Move the consonant or consonant cluster to the end of the word and add "ay"
+      return restOfWord + consonants + 'ay';
+    }
+  };
+
+  // Map over the array of words and convert each one to Pig Latin
+  const pigLatinWords = words.map(convertWordToPigLatin);
+
+  // Join the array of Pig Latin words back into a string
+  const pigLatinString = pigLatinWords.join(' ');
+
+  // Return the Pig Latin string
+  return pigLatinString;
+    }
+
+    function convertToPigLatin() {
+      const input = document.getElementById('input').value;
+      const output = toPigLatin(input);
+      document.getElementById('output').innerHTML = output;
+        return output; 
+    }
+
+    // Add event listener for "Enter" key press
+    document.getElementById('input').addEventListener('keyup', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        document.getElementById('convert-btn').click();
+      }
+    });
+</script>
+</html>
